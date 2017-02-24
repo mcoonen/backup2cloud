@@ -9,8 +9,8 @@ do
         case "${option}"
         in
                 c) CONFIGFILE=${OPTARG};;
-				d) DEBUG=true;;
-				s) SIMULATION=true;;
+                d) DEBUG=true;;
+                s) SIMULATION=true;;
                 v) version;;
         esac
 done
@@ -35,7 +35,7 @@ if [ "$GPGPASS" == "" ]; then echo "ERROR: You MUST specify a GPG Password in th
 ### Conditional prep an array of all subdirs ###
 ################################################
 
-if [ $SEPARATE_SUBDIRS ]; then
+if [ $SEPARATE_SUBDIRS == "true" ]; then
   #echo "Separate archive for each subfolder"
 
   # save and change IFS (IFS are the separators, defaults to space, which we have to avoid here)
@@ -49,7 +49,7 @@ if [ $SEPARATE_SUBDIRS ]; then
   IFS=$OLDIFS
    
 else
-  echo "1 large archive"
+  #echo "1 large archive"
   fileArray=$(basename $SOURCEDIR)
 fi
 
@@ -69,7 +69,7 @@ if [ $DEBUG ]; then
   echo "SEPARATE_SUBDIRS is '${SEPARATE_SUBDIRS}'"
   echo "LOGDIR is '${LOGDIR}'"
   echo "No. of archives to create is ${tLen}"
-  echo "VOLSIZE is '${VOLSIZE}'"
+  echo "VOLSIZE is ${VOLSIZE}"
   exit 1;
 fi
 
