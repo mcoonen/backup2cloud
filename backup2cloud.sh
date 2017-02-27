@@ -90,7 +90,7 @@ fi
 ### Perform duplicity backup  ###
 #################################
 echo "Backup job on $TODAY with backup2cloud version $SCRIPTVERSION" > $LOGFILE
-echo "Backup job: $SOURCEDIR"
+echo "Backup job: $SOURCEDIR" >> $LOGFILE
 
 for (( i=0; i<${tLen}; i++ ));
 do
