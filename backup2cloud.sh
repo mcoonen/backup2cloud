@@ -50,7 +50,7 @@ if [ $SEPARATE_SUBDIRS == "true" ]; then
    
 else
   #echo "1 large archive"
-  fileArray=$(basename $SOURCEDIR)
+  fileArray="."
 fi
 
 # get length of an array
@@ -90,6 +90,7 @@ fi
 ### Perform duplicity backup  ###
 #################################
 echo "Backup job on $TODAY with backup2cloud version $SCRIPTVERSION" > $LOGFILE
+echo "Backup job: $SOURCEDIR"
 
 for (( i=0; i<${tLen}; i++ ));
 do
