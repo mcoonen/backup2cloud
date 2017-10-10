@@ -99,6 +99,8 @@ do
   echo "" >> $LOGFILE
   if [ ! $SIMULATION ]; then
     PASSPHRASE=${GPGPASS} /usr/bin/duplicity --volsize $VOLSIZE "$SOURCEDIR/${fileArray[$i]}" "${TARGETDIR}/${fileArray[$i]}" >> $LOGFILE
+	# Empty the cache directory which contains local copies of all manifest files
+	rm -r /root/.cache/duplicity/*
   else
     echo "Simulation run..." >> $LOGFILE
   fi
