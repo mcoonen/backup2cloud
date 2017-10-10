@@ -27,6 +27,7 @@ else
 fi
 
 # Check presence of required options
+if [ "$TEMPDIR" == "" ]; then TEMPDIR="/tmp"; fi
 if [ "$SOURCEDIR" == "" ]; then SOURCEDIR="."; fi
 if [ "$TARGETDIR" == "" ]; then echo "ERROR: You MUST specify a TARGETDIR in the config file!"; exit 1; fi
 if [ "$GPGPASS" == "" ]; then echo "ERROR: You MUST specify a GPG Password in the config file!"; exit 1; fi
@@ -68,6 +69,7 @@ if [ $DEBUG ]; then
   echo "TARGETDIR is '${TARGETDIR}'"
   echo "SEPARATE_SUBDIRS is '${SEPARATE_SUBDIRS}'"
   echo "LOGDIR is '${LOGDIR}'"
+  echo "TEMPDIR is '${TEMPDIR}'"
   echo "No. of archives to create is ${tLen}"
   echo "VOLSIZE is ${VOLSIZE}"
   exit 1;
@@ -98,9 +100,12 @@ do
   echo "Starting backup for ${fileArray[$i]}" >> $LOGFILE
   echo "" >> $LOGFILE
   if [ ! $SIMULATION ]; then
-    PASSPHRASE=${GPGPASS} /usr/bin/duplicity --volsize $VOLSIZE "$SOURCEDIR/${fileArray[$i]}" "${TARGETDIR}/${fileArray[$i]}" >> $LOGFILE
+    
+	PASSPHRASE=${GPGPASS} /usr/bin/duplicity --volsize $VOLSIZE --tempdir $TEMPDIR "$SOURCEDIR/${fileArray[$i]}" "${TARGETDIR}/${fileArray[$i]}" >> $LOGFILE
+	
 	# Empty the cache directory which contains local copies of all manifest files
 	rm -r /root/.cache/duplicity/*
+	
   else
     echo "Simulation run..." >> $LOGFILE
   fi
